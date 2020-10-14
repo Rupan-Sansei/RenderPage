@@ -1,0 +1,63 @@
+	1.sesstion开启之后  浏览器就会随机生成一个id给当前用户。不清理cookie的话应该都会在，生成的文件在xampp下的tmp文件下。sesstion就类似个盒子，可以存数据。存数据的格式是 （名字|数据类型 数据）本项目用的主要是session_start();开启sesstion来查数据，之后能否匹配到$_SESSION["uid"]的值，如果没有就跳转到登陆页面，如果登陆成功，就在同时给$_SESSION["uid"]附一个值，就存起来。如果你想拿到$_SESSION["uid"]这个值到每一个页面，就只需在php中开启session_start()，之后直接输出。（本项目没写注册页面）
+	2.后缀为php的文件中可以写html，应该是为了让html和php更好的交互，例如上面的判断$_SESSION["uid"]是否有值，从而实现页面的条状。
+	3.本项目中的渲染数据我都是用js里面用的是ajax发送请求到php，PHP到操作数据库返回结果。
+	$.ajax({
+	     type:get/post(一般都是用post吧),
+	     url：请求到哪个页面,
+	     data:传过去的数据，  （注意如果想要数据传到其他页面上，只能用‘title=123&id=321’用$_post['id']获取321）
+	     dataType:"json",   (数据通过页面放回的数据类型)	
+	     success: function(参数){}（这个参数就是页面返回的结果，数据返回之后执行的函数）
+		})
+	
+	4.php下的连接数据库：
+	<?php
+   	header('Content-Type: text/html;charset=utf-8');
+   	$servername = "localhost";
+   	$username = "root";
+   	$password = "";
+   	$dbname="website";（数据库名字）
+   
+   	// 创建连接
+   	$conn = new mysqli($servername, $username, $password,$dbname);
+	// 检测连接
+	   if($conn ->connect_error)
+   	{
+       	die("连接失败：". $conn->connect_error);
+   	}
+	$sql =“sql语法”
+	读数据：
+		$result = $conn->query($sql);
+  		$css=$result->fetch_all();
+   		$json= json_encode($css);  //将数组转换成json对象
+   		echo $json;
+	增数据：
+		获取js过来的数据去增加
+		$sql =“sql语法”直接插入数据
+		if ($conn->query($sql) === TRUE) {
+     		   echo "新记录插入成功";
+    		} else {
+    		    echo "Error: " . $sql . "<br>" . $conn->error;
+    		}
+	删数据：
+		获取js过来的数据去删除
+		$sql =“sql语法”直接删除数据
+		if ($conn->query($sql) === TRUE) {
+        		echo "删除成功";
+    		} else {
+        		echo "Error: " . $sql . "<br>" . $conn->error;
+    		}
+	改数据：
+		获取js过来的数据去修改
+		$sql =“sql语法”直接修改数据
+		if ($conn->query($sql) === TRUE) {
+        		echo "修改成功";
+    		} else {
+        		echo "Error: " . $sql . "<br>" . $conn->error;
+    		}
+     	最后关闭数据库连接：$conn->close();
+	5.登录页面是通过form表单的属性action：ulr去跳转页面，本项目是登录成功就跳转到导航页面并在页面的右上角写上登录用户的名字。form表单跳转的页面可以直接用 $_GET、$_POST[组件定义的名字]来获取，之后通过mysqli_num_rows来查看结果是否只要一行，如果是就登录，并把用户名赋值给$_SESSION["uid"]（要开启sesstion才能使用，每一个页面都要开启一次，如果要用的话）
+	6.动态添加的元素已经不能用常规的事件选中了  jquery1.7+版本
+	 $("父元素").on("click","子元素",function(){
+	 do
+	 });
+	

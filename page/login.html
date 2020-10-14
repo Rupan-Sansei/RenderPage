@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        html
+        {
+            background: url('./pt/背景.png') no-repeat center center fixed;
+            background-size: cover;
+
+        }
+        a
+        {
+            text-decoration:none;
+            color:rgb(202, 182, 182,0.8);
+        }
+        article{
+            width: 300px;
+            height:290px;
+            background-color: rgb(0, 0, 0, 0.2);
+            vertical-align: middle;
+            margin: 0 auto;
+            margin-top: 10%;
+            border-radius: 5px;
+        }
+        header
+        {
+            height: 90px;
+            line-height: 90px;
+            text-align:center;
+            font-size: x-large;
+        }
+        form
+        {   
+            text-align:center;
+            margin-top: 10px;
+            height: 150px;
+        }
+        input,button
+        {   margin: 0;
+            border: 0;
+            height: 30px;
+            width: 250px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            padding-left: 10px;  
+        }
+        a
+        {
+            margin-left: 29px;
+        }
+    </style>
+</head>
+<body>
+<article>
+    <header>xx导航登录</header>
+    <form action="/数据渲染导航页面/server/logindeal.php" method="post">
+        <input type="text" name="uid" placeholder="请输入用户名"><br>
+        <input type="password" name="pwd" placeholder="请输入密码"><br>
+        <button>确定</button>
+    </form>
+    <footer><a href="#">注册</a></footer>
+</article>
+</body>
+</html>
